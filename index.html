@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daddy Koraeddy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #ff00ff;
+            --secondary: #9932CC;
+            --bg-dark: #13111C;
+            --card-bg: #1E1B2E;
+        }
+
+        body {
+            background: var(--bg-dark);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .entoverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 1s ease-out;
+        }
+
+        .entbtn {
+            padding: 1rem 2rem;
+            font-size: 1.5rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            transform: scale(1);
+            transition: transform 0.3s ease;
+        }
+
+        .entbtn:hover {
+            transform: scale(1.1);
+        }
+
+        .conthide {
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+
+        .contshow {
+            opacity: 1;
+        }
+
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .anmbg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #13111C, #1E1B2E);
+            z-index: 0;
+        }
+
+        .anmbg::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 20%),
+                        radial-gradient(circle, var(--secondary) 10%, transparent 30%);
+            animation: bgAnimation 20s linear infinite;
+            opacity: 0.1;
+        }
+
+        @keyframes bgAnimation {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .container {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            z-index: 2;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 0, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .profile:hover {
+            transform: translateZ(10px) rotateX(2deg);
+            border-color: var(--primary);
+        }
+
+        .profpic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+        }
+
+        .profinf h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .profile button {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .profile button:hover {
+            transform: scale(1.05);
+        }
+
+        .githubsgr {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .githubs {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid rgba(255, 0, 255, 0.1);
+        }
+
+        .githubs:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 5px 15px rgba(255, 0, 255, 0.2);
+        }
+
+        .githubs button {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .githubs button:hover {
+            transform: scale(1.05);
+        }
+
+        .skidw {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(255, 0, 255, 0.1);
+        }
+
+        .skide {
+            background: rgba(30, 27, 46, 0.5);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255, 0, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .skide:hover {
+            border-color: var(--primary);
+        }
+
+        .skiding {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .skiding.expanded {
+            max-height: 500px;
+        }
+
+        .minf {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .minf:hover {
+            transform: scale(1.05);
+        }
+
+        .songbox {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 3rem;
+        }
+
+        .song {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            background: rgba(30, 27, 46, 0.5);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .song.playing {
+            border: 1px solid var(--primary);
+            background: rgba(255, 0, 255, 0.1);
+        }
+
+        .songbtn {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .graphbox {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 3rem;
+        }
+
+        #raidGraph {
+            width: 100%;
+            height: 400px;
+            margin-top: 1rem;
+        }
+
+        canvas {
+            max-width: 100%;
+        }
+
+        .comgoal {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 3rem;
+        }
+
+        .cgoal {
+            background: rgba(30, 27, 46, 0.5);
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .cgoali {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .stcard {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .statval {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="entoverlay" id="entoverlay">
+        <button class="entbtn" onclick="enter()">Click To Enter</button>
+    </div>
+
+    <div id="maincont" class="conthide">
+        <div class="anmbg"></div>
+        <div id="particles-js"></div>
+
+        <div class="container">
+            <div class="profile">
+                <img src="pfp.png" alt="Profile Picture" class="profpic">
+                <div class="profinf">
+                    <h1>Koraedn</h1>
+                    <p>discord.gg/catbypasser</p>
+                    <button onclick="window.location.href='https://discord.com/invite/wRjj7PhxDV'">Ascend Discord Server</button>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div class="stcard">
+                    <h3>Raids</h3>
+                    <div class="statval">2</div>
+                </div>
+                <div class="stcard">
+                    <h3>raid sucess %</h3>
+                    <div class="statval">100%</div>
+                </div>
+                <div class="stcard">
+                    <h3>catbypasser's members</h3>
+                    <div class="statval">4.4k+</div>
+                </div>
+                <div class="stcard">
+                    <h3>Ascend's members</h3>
+                    <div class="statval">≈10</div>
+                </div>
+            </div>
+
+            
+            <div class="githubsgr">
+                <div class="githubs">
+                    <h3>Koraedn</h3>
+                    <p>my github</p>
+                    <button onclick="window.location.href='https://github.com/koraedn/'">my github</button>
+                </div>
+                <div class="githubs">
+                    <h3>schuh</h3>
+                    <p>schuh cuh</p>
+                    <button onclick="window.location.href='https://github.com/schuh1337'">schuh github</button>
+                </div>
+            </div>
+
+            <div class="songbox">
+                <h2>fav songs</h2>
+                <div id="songList"></div>
+            </div>
+
+            <div class="graphbox">
+                <h2>raid graph</h2>
+                <canvas id="raidGraph"></canvas>
+            </div>
+
+            <div class="comgoal">
+                <h2>completed goals</h2>
+                <div class="cgoal">
+                    <div class="cgoali">🤑</div>
+                    <div>
+                        <h3>3K Lines</h3>
+                        <p>Coded 3,000 lines is LUA within a week</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="skidw">
+                <h2>wall of skids</h2>
+                <div class="skide">
+                    <h3>Qwilyy</h3>
+                    <p>Loves to code his 'own' tools..</p>
+                    <button class="minf" onclick="toggleSkidInfo(this)">More Info</button>
+                    <div class="skiding">
+                        <h4>Evaluation:</h4>
+                        <p>he skidded schuh tool</p>
+                        <p>he skiddedd it</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: '#ff00ff' },
+                shape: { type: 'circle' },
+                opacity: { value: 0.5, random: false },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#9932CC',
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: 'none',
+                    random: false,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false,
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: { enable: true, mode: 'repulse' },
+                    onclick: { enable: true, mode: 'push' },
+                    resize: true
+                }
+            },
+            retina_detect: true
+        });
+
+        const songs = [
+            'Call Me Girl.mp3',
+            'Kompa.mp3',
+            'Her Love.mp3',
+            'tequila.mp3',
+        ];
+
+        const audio = new Audio();
+        let currSong = null;
+
+        function enter() {
+            const overlay = document.getElementById('entoverlay');
+            const maincont = document.getElementById('maincont');
+            
+            window.scrollTo(0, 0);
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                maincont.classList.add('contshow');
+                playsng(3);
+            }, 1000);
+        }
+
+        function genSongList() {
+            const songList = document.getElementById('songList');
+            songs.forEach((song, idx) => {
+                const div = document.createElement('div');
+                div.className = 'song';
+                div.innerHTML = `
+                    <span>${song.replace('.mp3', '')}</span>
+                    <button class="songbtn" onclick="playsng(${idx})">Play</button>
+                `;
+                songList.appendChild(div);
+            });
+        }
+
+        function playsng(idx) {
+            const songElements = document.querySelectorAll('.song');
+            songElements.forEach(el => el.classList.remove('playing'));
+            
+            if(currSong === idx && !audio.paused) {
+                audio.pause();
+                currSong = null;
+            } else {
+                audio.src = songs[idx];
+                audio.loop = true;
+                audio.play();
+                currSong = idx;
+                songElements[idx].classList.add('playing');
+            }
+        }
+
+        const raidData = [
+            ['1st', 10, 'forgot.server', 'being skids'],
+            ['2nd', 25, 'Qwilyy', 'skidding schuhs tool'],
+        ];
+
+        function createGraph() {
+            const ctx = document.getElementById('raidGraph').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: raidData.map(raid => raid[0]),
+                    datasets: [{
+                        label: 'catbypasser members who raided',
+                        data: raidData.map(raid => raid[1]),
+                        borderColor: '#ff00ff',
+                        backgroundColor: 'rgba(255, 0, 255, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#fff'
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            ticks: { color: '#fff' },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                        },
+                        x: {
+                            ticks: { color: '#fff' },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                        }
+                    }
+                }
+            });
+        }
+
+        function toggleSkidInfo(btn) {
+            const info = btn.nextElementSibling;
+            info.classList.toggle('expanded');
+            btn.textContent = info.classList.contains('expanded') ? 'Less Info' : 'More Info';
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            const profile = document.querySelector('.profile');
+            const rect = profile.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const xRotation = (y - rect.height / 2) / 40;
+            const yRotation = (x - rect.width / 2) / -40;
+            profile.style.transform = `perspective(1000px) rotateX(${xRotation}deg) rotateY(${yRotation}deg) translateZ(10px)`;
+        });
+
+        document.querySelector('.profile').addEventListener('mouseleave', () => {
+            document.querySelector('.profile').style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
+        });
+
+        window.onload = () => {
+            genSongList();
+            createGraph();
+        };
+    </script>
+</body>
+</html>
